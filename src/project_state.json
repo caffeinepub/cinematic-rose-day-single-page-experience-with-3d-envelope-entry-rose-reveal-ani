@@ -1,0 +1,313 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 13,
+  "summary": "Cinematic, high-contrast Rose Day single-page website experience with an interactive realistic envelope entry, then a 2-image reveal flow: Image 1 replaces the rose animation and appears with the timed romantic text sequence (no looping/blinking), then Image 2 (lip-biting emoji-style face) appears with its caption and stays visible until the final note fades in; optional SVG petal animations; final note + footer signature text shown exactly and remain permanently—no placeholders, no boxes/cards, no default UI, and no broken assets.",
+  "architectural_notes": [
+    "Avoid external image URLs unless base64-encoded; prefer inline SVG/base64 assets to prevent broken links.",
+    "If rose petals (or any asset-dependent section) cannot be rendered reliably, omit that section rather than showing broken/missing-image symbols.",
+    "All major elements (envelope, rose, text, note, footer) must sit directly on background—no cards/containers/frames.",
+    "Animation/state must be one-shot: rose-text+Image1 must not loop/blink/disappear; final note and footer remain permanently visible once shown.",
+    "User requested a full clean rebuild of the entire experience to avoid errors/glitches/loops rather than incremental fixes.",
+    "Asset mapping confirmed: Image 1 (rose replacement) = dog holding a rose in his mouth; Image 2 = lip-biting emoji-style face. Ensure correct ordering in the stage flow.",
+    "User-confirmed placement update: Image 1 must appear directly above the first romantic text line (“I brought you a rose today…”).",
+    "User-confirmed placement update: Image 2 + caption must be positioned below the final note and above the footer signature, with caption exactly “This is me when I see you:)”."
+  ],
+  "known_issues": [
+    "Rose section text below the image is looping/disappearing and reappearing with the note, causing instability; must be fixed so the sequence runs once and remains stable.",
+    "Current deployed draft may not be loading/reflecting updated details correctly (deployment/build glitch).",
+    "Deployed draft is missing required sections/assets (custom Image 1 + Image 2, final note/poetry, footer signature, and other prompt-specified elements); must be included end-to-end per the full prompt.",
+    "After clicking the envelope (“For Noor — tap gently 🌹”), only the 3-line romantic text appears; Image 1 (dog with rose), Image 2 (lip-biting) + caption, final note, and footer are missing in the deployed draft.",
+    "Deployed build is still missing the user-requested Image 1 (dog with rose) and Image 2 (lip-biting) + caption; must be added and verified present in the final layout."
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-create-a-single-page-cinematic-rose-day-experience-with-a-full-screen-dark-romantic-background-gradient-deep-wine-red-dark-maroon-near-black-including-a-subtle-vignette-around-screen-edges-ensure-there-are-no-pastel-colors-no-light-backgrounds-and-no-flat-single-color-fills",
+      "title": "Create a single-page, cinematic Rose Day experience with a full-screen dark romantic background gradient (deep wine red → dark maroon → near black), including a subtle vignette around screen edges; ensure there are no pastel colors, no light backgrounds, and no flat single-color fills.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-entry-interaction-as-a-realistic-textured-elegant-envelope-no-placeholders-no-square-images-no-surrounding-boxes-cards-frames-containers-display-the-caption-text-exactly-as-for-noor-tap-gently-on-tap-click-animate-the-envelope-opening-with-a-natural-flap-lift-motion-and-transition-seamlessly-into-the-rose-reveal-sequence-optionally-add-subtle-floating-motion-and-or-a-gentle-glow-on-a-wax-seal",
+      "title": "Implement the entry interaction as a realistic, textured, elegant envelope (no placeholders, no square images, no surrounding boxes/cards/frames/containers). Display the caption text exactly as: “For Noor — tap gently 🌹”. On tap/click, animate the envelope opening with a natural flap-lift motion and transition seamlessly into the rose reveal sequence (optionally add subtle floating motion and/or a gentle glow on a wax seal).",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-rose-reveal-as-exactly-one-single-realistic-red-rose-with-a-transparent-background-png-svg-style-sharp-edges-and-natural-proportions-ensure-it-is-true-deep-crimson-red-with-a-matte-look-no-metallic-chrome-silver-shiny-effects-animate-the-rose-growth-organically-from-stem-to-bloom-stem-bloom-and-do-not-place-the-rose-inside-any-visible-container-mask-square-or-rectangle-frame",
+      "title": "Implement the rose reveal as exactly ONE single realistic red rose with a transparent background (PNG/SVG-style), sharp edges, and natural proportions; ensure it is true deep crimson red with a matte look (no metallic/chrome/silver/shiny effects). Animate the rose growth organically from stem to bloom (stem → bloom), and do not place the rose inside any visible container, mask, square, or rectangle frame.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-rose-petal-animations-using-individual-rose-shaped-inline-svg-petals-as-separate-dom-elements-that-float-freely-across-the-screen-and-fade-out-naturally-using-only-css-animations-transform-opacity-do-not-use-canvas-particle-systems-clipping-or-external-image-urls-unless-the-images-are-base64-encoded-if-petals-cannot-be-rendered-safely-without-broken-assets-omit-the-petals-entirely-do-not-show-broken-links-symbols-missing-image-icons-or-fallback-placeholders",
+      "title": "Add rose petal animations using individual rose-shaped inline SVG petals as separate DOM elements that float freely across the screen and fade out naturally using only CSS animations (transform + opacity). Do not use canvas, particle systems, clipping, or external image URLs (unless the images are base64-encoded). If petals cannot be rendered safely without broken assets, omit the petals entirely (do not show broken links, '?' symbols, missing-image icons, or fallback placeholders).",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-timed-romantic-text-sequence-in-an-elegant-serif-or-handwritten-romance-style-font-with-ivory-or-soft-gold-color-for-high-contrast-reveal-one-line-at-a-time-with-a-subtle-fade-in-typing-like-animation-and-pauses-between-lines-using-the-exact-lines-below-including-punctuation-and-ellipses-and-making-the-final-line-glow-slightly-and-hold-i-brought-you-a-rose-today-but-then-i-realized-you-re-already-the-most-beautiful-rose-there-is",
+      "title": "Implement the timed romantic text sequence in an elegant serif or handwritten romance-style font with ivory or soft-gold color for high contrast. Reveal one line at a time with a subtle fade-in/typing-like animation and pauses between lines, using the exact lines below (including punctuation and ellipses) and making the final line glow slightly and hold:\n\n“I brought you a rose today…”\n\n“But then I realized…”\n\n“You’re already the most beautiful rose there is.”",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-the-final-note-as-floating-text-directly-on-the-background-with-no-card-no-box-no-shadow-container-and-no-framed-area-the-final-note-must-be-shown-exactly-word-for-word-as-provided-without-any-paraphrasing-shortening-rewriting-or-line-removal-happy-rose-day-my-noor-e-jahan-today-the-world-celebrates-roses-their-beauty-their-softness-the-way-they-make-everything-feel-a-little-more-alive-but-every-time-i-look-at-you-i-understand-why-roses-exist-at-all-you-have-a-way-of-turning-ordinary-moments-into-memories-silence-into-comfort-and-simple-days-into-something-i-never-want-to-end-your-smile-blooms-where-nothing-else-could-and-your-presence-colors-my-world-in-ways-no-flower-ever-could-so-this-rose-isn-t-just-a-gift-it-s-a-reminder-a-reminder-that-you-re-rare-you-re-beautiful-and-you-re-the-light-that-makes-my-world-shine-always-yours-with-all-my-love",
+      "title": "Display the final note as floating text directly on the background with no card, no box, no shadow container, and no framed area. The final note must be shown exactly word-for-word as provided, without any paraphrasing, shortening, rewriting, or line removal:\n\nHappy Rose Day, my Noor-e-Jahan.\n\nToday the world celebrates roses — their beauty, their softness, the way they make everything feel a little more alive.\nBut every time I look at you, I understand why roses exist at all.\n\nYou have a way of turning ordinary moments into memories, silence into comfort, and simple days into something I never want to end.\nYour smile blooms where nothing else could, and your presence colors my world in ways no flower ever could.\n\nSo this rose isn’t just a gift — it’s a reminder.\nA reminder that you’re rare, you’re beautiful, and you’re the light that makes my world shine.\n\nAlways yours,\nwith all my love 🤍",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-existing-footer-signature-line-with-the-exact-text-below-no-paraphrasing-shortening-alteration-centered-at-the-bottom-of-the-page-directly-beneath-the-rose-and-final-note-using-the-same-romantic-font-style-crafted-with-love-from-hamza-for-the-one-who-owns-my-heart",
+      "title": "Replace the existing footer signature line with the exact text below (no paraphrasing/shortening/alteration), centered at the bottom of the page directly beneath the rose and final note, using the same romantic font style:\n\n“Crafted with love,\nfrom Hamza — for the one who owns my heart.”",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enforce-strict-no-placeholder-and-no-broken-asset-behavior-across-the-entire-experience-do-not-render-missing-images-default-missing-image-icons-placeholder-ui-default-ui-components-visible-particle-boxes-cards-frames-or-containers-if-any-optional-visual-element-e-g-petals-cannot-render-correctly-omit-pause-that-section-rather-than-showing-broken-content",
+      "title": "Enforce strict no-placeholder and no-broken-asset behavior across the entire experience: do not render missing images, default missing-image icons, placeholder UI, default UI components, visible particle boxes, cards, frames, or containers. If any optional visual element (e.g., petals) cannot render correctly, omit/pause that section rather than showing broken content.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-required-generated-images-as-static-frontend-assets-under-frontend-public-assets-generated-and-use-them-in-the-experience-do-not-load-external-image-urls-for-envelope-rose-ensure-all-rendered-images-avoid-square-aspect-presentation-and-do-not-appear-inside-any-framed-container",
+      "title": "Add required generated images as static frontend assets under frontend/public/assets/generated and use them in the experience (do not load external image URLs for envelope/rose). Ensure all rendered images avoid square aspect presentation and do not appear inside any framed container.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-instability-where-the-romantic-text-under-the-first-reveal-loops-blinks-disappears-and-reappears-with-the-final-note-ensure-each-timed-sequence-runs-exactly-once-per-page-load-and-does-not-restart-due-to-react-re-renders-e-g-stage-changes",
+      "title": "Fix the instability where the romantic text under the first reveal loops/blinks/disappears and reappears with the final note. Ensure each timed sequence runs exactly once per page load and does not restart due to React re-renders (e.g., stage changes).",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-current-rose-reveal-animation-image-with-the-user-provided-custom-image-1-rose-replacement-image-so-that-this-image-is-what-appears-after-the-envelope-opens-do-not-show-the-existing-rose-asset-rose-matte-crimson-dim-1200x1800-png-in-the-main-flow",
+      "title": "Replace the current rose reveal animation/image with the user-provided custom Image 1 (rose replacement image) so that this image is what appears after the envelope opens; do not show the existing rose asset (rose-matte-crimson.dim_1200x1800.png) in the main flow.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-confirmed-2-image-sequence-and-stage-flow-envelope-opens-show-image-1-alongside-the-3-line-romantic-text-sequence-kept-visible-no-looping-after-the-3rd-line-completes-show-image-2-lip-biting-emoji-style-face-with-the-caption-exactly-this-is-when-i-see-you-keep-the-lip-biting-image-caption-visible-until-the-final-note-fades-in-show-final-note-and-footer-signature-and-keep-them-visible-permanently",
+      "title": "Implement the confirmed 2-image sequence and stage flow: Envelope opens → show Image 1 alongside the 3-line romantic text sequence (kept visible, no looping) → after the 3rd line completes, show Image 2 (lip-biting emoji-style face) with the caption exactly: “This is when I see you…” → keep the lip-biting image + caption visible until the final note fades in → show final note and footer signature and keep them visible permanently.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-reveal-images-image-1-and-image-2-follow-the-strict-presentation-rules-no-cards-frames-containers-around-images-no-square-presentation-no-placeholders-images-must-be-responsive-with-natural-proportions-and-sit-directly-on-the-cinematic-background",
+      "title": "Ensure all reveal images (Image 1 and Image 2) follow the strict presentation rules: no cards/frames/containers around images, no square presentation, no placeholders; images must be responsive with natural proportions and sit directly on the cinematic background.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-rebuild-the-application-cleanly-so-the-deployed-draft-reflects-the-latest-cinematic-rose-day-flow-and-does-not-exhibit-deployment-loading-glitches-no-missing-updated-details",
+      "title": "Rebuild the application cleanly so the deployed draft reflects the latest cinematic Rose Day flow and does not exhibit deployment/loading glitches (no missing updated details).",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-stage-flow-and-all-timed-sequences-execute-exactly-once-per-page-load-and-never-loop-blink-disappear-reappear-or-restart-due-to-react-re-renders-or-stage-changes",
+      "title": "Ensure the stage flow and all timed sequences execute exactly once per page load and never loop, blink, disappear/reappear, or restart due to React re-renders or stage changes.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enforce-the-global-no-placeholders-no-broken-assets-rule-across-the-entire-flow-during-the-clean-rebuild-if-any-required-image-asset-fails-to-load-omit-that-visual-element-without-showing-broken-image-icons-or-fallback-ui",
+      "title": "Enforce the global “no placeholders / no broken assets” rule across the entire flow during the clean rebuild: if any required image asset fails to load, omit that visual element without showing broken image icons or fallback UI.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-image-2-lip-biting-reveal-to-use-the-user-uploaded-file-f9aa8c0055136ac1bcbba2a30846c19f-1-jpg-as-the-displayed-image-asset-served-from-frontend-public-assets-generated-and-keep-the-caption-text-exactly-this-is-when-i-see-you",
+      "title": "Update the Image 2 (lip-biting) reveal to use the user-uploaded file f9aa8c0055136ac1bcbba2a30846c19f-1.jpg as the displayed image asset, served from frontend/public/assets/generated, and keep the caption text exactly: “This is when I see you…”",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-current-image-1-rose-reveal-asset-so-that-the-image-shown-after-the-envelope-opens-is-the-user-provided-image-1-described-as-a-dog-holding-a-rose-in-his-mouth-and-ensure-the-old-rose-asset-assets-generated-rose-matte-crimson-dim-1200x1800-png-is-not-shown-in-the-main-flow",
+      "title": "Replace the current Image 1 (rose reveal) asset so that the image shown after the envelope opens is the user-provided Image 1 described as “a dog holding a rose in his mouth”, and ensure the old rose asset /assets/generated/rose-matte-crimson.dim_1200x1800.png is not shown in the main flow.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-full-single-page-stage-flow-renders-end-to-end-exactly-once-per-page-load-no-looping-blinking-disappearing-reappearing-envelope-image-1-the-3-romantic-lines-then-image-2-caption-then-final-note-footer-signature-with-all-elements-that-are-meant-to-persist-staying-visible-through-later-stages",
+      "title": "Ensure the full single-page stage flow renders end-to-end exactly once per page load (no looping/blinking/disappearing/reappearing): Envelope → Image 1 + the 3 romantic lines → then Image 2 + caption → then final note + footer signature, with all elements that are meant to persist staying visible through later stages.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-relocate-the-user-provided-images-into-frontend-public-assets-generated-and-update-the-code-to-reference-those-exact-local-paths-enforce-the-global-rule-to-never-show-broken-image-icons-placeholders-or-fallback-ui-if-an-asset-is-missing",
+      "title": "Add/relocate the user-provided images into frontend/public/assets/generated and update the code to reference those exact local paths; enforce the global rule to never show broken image icons, placeholders, or fallback UI if an asset is missing.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-full-single-page-stage-flow-always-progresses-end-to-end-after-the-envelope-is-opened-image-1-dog-holding-a-rose-the-3-line-romantic-text-sequence-image-2-lip-biting-face-caption-this-is-when-i-see-you-final-note-footer-signature-the-final-note-and-footer-must-render-even-if-image-1-and-or-image-2-fail-to-load-while-still-obeying-the-global-rule-to-never-show-broken-image-icons-or-placeholders-omit-the-failed-image-element-entirely",
+      "title": "Ensure the full single-page stage flow always progresses end-to-end after the envelope is opened: Image 1 (dog holding a rose) + the 3-line romantic text sequence → Image 2 (lip-biting face) + caption “This is when I see you…” → final note + footer signature. The final note and footer must render even if Image 1 and/or Image 2 fail to load, while still obeying the global rule to never show broken-image icons or placeholders (omit the failed image element entirely).",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-and-correct-the-static-asset-paths-and-filenames-for-image-1-and-image-2-so-they-are-served-from-frontend-public-assets-generated-and-match-the-code-references-exactly-image-1-must-be-the-dog-with-rose-image-and-image-2-must-be-f9aa8c0055136ac1bcbba2a30846c19f-1-jpg-ensure-no-legacy-rose-asset-is-referenced-in-the-main-flow",
+      "title": "Verify and correct the static asset paths and filenames for Image 1 and Image 2 so they are served from frontend/public/assets/generated and match the code references exactly: Image 1 must be the dog-with-rose image and Image 2 must be f9aa8c0055136ac1bcbba2a30846c19f-1.jpg. Ensure no legacy rose asset is referenced in the main flow.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-single-page-layout-so-the-lip-biting-emoji-image-section-renders-below-the-long-rose-day-final-note-letter-and-above-the-footer-signature-text-with-a-visible-vertical-gap-from-the-note-while-keeping-all-other-existing-visuals-and-copy-unchanged",
+      "title": "Update the single-page layout so the lip-biting emoji image section renders BELOW the long Rose Day final note/letter and ABOVE the footer signature text, with a visible vertical gap from the note, while keeping all other existing visuals and copy unchanged.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-change-the-lip-biting-emoji-caption-text-to-be-shown-exactly-as-this-is-me-when-i-see-you-matching-capitalization-and-punctuation-and-ensure-it-appears-together-with-the-lip-biting-image-in-its-new-location",
+      "title": "Change the lip-biting emoji caption text to be shown exactly as: “This is me when I see you:)” (matching capitalization and punctuation), and ensure it appears together with the lip-biting image in its new location.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-image-1-the-dog-holding-a-rose-in-his-mouth-is-actually-included-and-displayed-directly-above-the-first-romantic-line-i-brought-you-a-rose-today-using-a-correct-local-static-asset-path-under-assets-generated-and-preserving-the-global-rule-to-omit-the-image-entirely-if-it-fails-to-load-no-broken-image-icon-placeholder",
+      "title": "Ensure Image 1 (the dog holding a rose in his mouth) is actually included and displayed directly ABOVE the first romantic line “I brought you a rose today…”, using a correct local static asset path under /assets/generated and preserving the global rule to omit the image entirely if it fails to load (no broken-image icon / placeholder).",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-adjust-the-stage-progression-so-the-overall-experience-still-progresses-end-to-end-exactly-once-per-page-load-without-looping-blinking-restarting-and-still-reaches-the-final-note-footer-even-if-any-image-fails-to-load-while-reflecting-the-new-placement-of-the-lip-biting-section-below-the-final-note",
+      "title": "Adjust the stage progression so the overall experience still progresses end-to-end exactly once per page load, without looping/blinking/restarting, and still reaches the final note + footer even if any image fails to load—while reflecting the new placement of the lip-biting section below the final note.",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create dark cinematic background (wine red → maroon → near black) with subtle vignette; strictly no pastel/light/flat colors",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Entry interaction: realistic textured 3D-ish envelope (optional wax seal) with caption “For Noor — tap gently 🌹”; tap opens smoothly and transitions into rose reveal",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Optional petals: individual rose-shaped SVG petals as separate DOM elements floating/fading via CSS transforms/opacity; no canvas/particle systems; omit entirely if assets can’t render safely (no broken links)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Text animation sequence: elegant serif/handwritten romance font; ivory/soft-gold text; lines appear one-by-one with subtle fade/typing and final line slight glow/hold",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Final note section: display provided message word-for-word floating directly on background (no card/box/container)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Footer signature: center exact provided signature text beneath rose and final note in matching romantic font style",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Global strict rendering rules: no placeholders, no square images, no frames/cards/boxes, no default UI components, no broken assets; pause/omit sections that cannot render correctly",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Replace the rose growth animation entirely with a provided custom Image 1 that appears after the envelope opens; show the 3-line romantic text sequence once only (no blink/loop) and keep image+text visible until the next section",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Add second ‘fun’ section: show provided Image 2 (lip-biting emoji-style face) after the rose text completes, with caption “This is when I see you…”; keep this section visible until the final note fades in",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Ensure the final note and footer signature are present and match the exact specified wording and punctuation, and remain visible permanently once shown (no disappearance/reappearance).",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Add Image 1 (dog holding a rose in his mouth) directly above the line “I brought you a rose today…” (the first romantic text line); ensure it is actually included in the build with no other changes",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Place Image 2 (lip-biting emoji-style face) BELOW the long Rose Day final note/letter and ABOVE the footer signature; add caption exactly: “This is me when I see you:)” with some gap; keep all other elements untouched",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Cinematic Rose Day single-page experience with 3D envelope entry, rose reveal, animated petals, and exact final note/signature",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

@@ -1,0 +1,95 @@
+{
+  "kind": "build_request",
+  "title": "Add the dog-with-rose image above the romantic lines and move the lip-biting emoji section below the final note",
+  "priority": "high",
+  "requirements": [
+    {
+      "id": "REQ-24",
+      "text": "Update the single-page layout so the lip-biting emoji image section renders BELOW the long Rose Day final note/letter and ABOVE the footer signature text, with a visible vertical gap from the note, while keeping all other existing visuals and copy unchanged.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-USER-clarification"
+        ],
+        "quotes": [
+          "the lip biting emoji should be below the rose day note with caption, and above the crafted with love from hamza text."
+        ]
+      },
+      "acceptanceCriteria": [
+        "After the envelope is opened and the experience completes, the page order is: FinalNote text block → (gap) Lip-biting image + caption → FooterSignature text.",
+        "Lip-biting section is not shown above or inside the FinalNote content.",
+        "No cards/frames/containers are introduced around the lip-biting image; it sits directly on the cinematic background.",
+        "All previously existing sections (envelope, Image 1 area, romantic lines, petals if enabled, final note, footer) keep their current styling and behavior except for the lip-biting section’s placement."
+      ]
+    },
+    {
+      "id": "REQ-25",
+      "text": "Change the lip-biting emoji caption text to be shown exactly as: “This is me when I see you:)” (matching capitalization and punctuation), and ensure it appears together with the lip-biting image in its new location.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-USER-clarification"
+        ],
+        "quotes": [
+          "yes the caption for lip biting emoji should be 'This is me when I see you:)'"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The caption renders exactly as: “This is me when I see you:)”.",
+        "The previous caption text (“This is when I see you…”) is not displayed anywhere."
+      ]
+    },
+    {
+      "id": "REQ-26",
+      "text": "Ensure Image 1 (the dog holding a rose in his mouth) is actually included and displayed directly ABOVE the first romantic line “I brought you a rose today…”, using a correct local static asset path under /assets/generated and preserving the global rule to omit the image entirely if it fails to load (no broken-image icon / placeholder).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-USER-clarification"
+        ],
+        "quotes": [
+          "Add the dog holding rose in his mouth image above i brought you a rose today, and there is no existing image already i dont know why u didnt added."
+        ]
+      },
+      "acceptanceCriteria": [
+        "When the envelope transitions to the romantic lines section, the dog-with-rose image is visible above the first romantic line on a normal load.",
+        "The Image 1 asset is loaded from a local path under /assets/generated (no external URLs).",
+        "If the Image 1 asset fails to load, the app shows no broken-image icon and continues the flow with the text still visible."
+      ]
+    },
+    {
+      "id": "REQ-27",
+      "text": "Adjust the stage progression so the overall experience still progresses end-to-end exactly once per page load, without looping/blinking/restarting, and still reaches the final note + footer even if any image fails to load—while reflecting the new placement of the lip-biting section below the final note.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-USER-final"
+        ],
+        "quotes": [
+          "other things shoul be untouched just work on these things"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The experience progresses once per page load with no repeated/looped timed sequences caused by re-renders.",
+        "FinalNote and FooterSignature always render after the envelope is opened, even if Image 1 and/or the lip-biting image fails to load.",
+        "The lip-biting section appears in the final layout position (below FinalNote, above FooterSignature) without causing stage-flow regressions or re-triggers."
+      ]
+    }
+  ],
+  "constraints": [
+    "Frontend immutable paths must not be edited: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui.",
+    "Do not introduce any placeholder UI, missing-image icons, cards, frames, or containers around images or text.",
+    "Do not load external image URLs; use only static assets served from frontend/public/assets/generated (via /assets/generated/...).",
+    "Keep all existing text content unchanged except for the requested lip-biting caption change.",
+    "Backend is not required for this change (backend/main.mo should remain unchanged unless strictly necessary)."
+  ],
+  "nonGoals": [
+    "Adding new sections beyond the dog-with-rose image and the lip-biting emoji section repositioning + caption update.",
+    "Changing the cinematic background, envelope interaction, romantic 3-line text content/timings, final note wording, or footer signature wording (beyond the specified caption update).",
+    "Adding third-party integrations, new authentication methods, or any database/external storage."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

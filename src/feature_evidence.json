@@ -1,0 +1,80 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-update-the-single-page-layout-so-the-lip-biting-emoji-image-section-renders-below-the-long-rose-day-final-note-letter-and-above-the-footer-signature-text-with-a-visible-vertical-gap-from-the-note-while-keeping-all-other-existing-visuals-and-copy-unchanged",
+      "featureTitle": "Update the single-page layout so the lip-biting emoji image section renders BELOW the long Rose Day final note/letter and ABOVE the footer signature text, with a visible vertical gap from the note, while keeping all other existing visuals and copy unchanged.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/LipBitingReveal.tsx",
+        "frontend/src/index.css"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-24"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-change-the-lip-biting-emoji-caption-text-to-be-shown-exactly-as-this-is-me-when-i-see-you-matching-capitalization-and-punctuation-and-ensure-it-appears-together-with-the-lip-biting-image-in-its-new-location",
+      "featureTitle": "Change the lip-biting emoji caption text to be shown exactly as: “This is me when I see you:)” (matching capitalization and punctuation), and ensure it appears together with the lip-biting image in its new location.",
+      "files": [
+        "frontend/src/components/LipBitingReveal.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-25"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-image-1-the-dog-holding-a-rose-in-his-mouth-is-actually-included-and-displayed-directly-above-the-first-romantic-line-i-brought-you-a-rose-today-using-a-correct-local-static-asset-path-under-assets-generated-and-preserving-the-global-rule-to-omit-the-image-entirely-if-it-fails-to-load-no-broken-image-icon-placeholder",
+      "featureTitle": "Ensure Image 1 (the dog holding a rose in his mouth) is actually included and displayed directly ABOVE the first romantic line “I brought you a rose today…”, using a correct local static asset path under /assets/generated and preserving the global rule to omit the image entirely if it fails to load (no broken-image icon / placeholder).",
+      "files": [
+        "frontend/src/App.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-26"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-adjust-the-stage-progression-so-the-overall-experience-still-progresses-end-to-end-exactly-once-per-page-load-without-looping-blinking-restarting-and-still-reaches-the-final-note-footer-even-if-any-image-fails-to-load-while-reflecting-the-new-placement-of-the-lip-biting-section-below-the-final-note",
+      "featureTitle": "Adjust the stage progression so the overall experience still progresses end-to-end exactly once per page load, without looping/blinking/restarting, and still reaches the final note + footer even if any image fails to load—while reflecting the new placement of the lip-biting section below the final note.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/LipBitingReveal.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-27"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

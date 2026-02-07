@@ -1,0 +1,80 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-07T12:02:45.968Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 4,
+    "implemented": 4,
+    "items": [
+      {
+        "id": "REQ-24",
+        "summary": "Update the single-page layout so the lip-biting emoji image section renders BELOW the long Rose Day final note/letter and ABOVE the footer signature text, with a visible vertical gap from the note, while keeping all other existing visuals and copy unchanged.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/components/LipBitingReveal.tsx",
+          "frontend/src/index.css"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/components/LipBitingReveal.tsx",
+          "frontend/src/index.css"
+        ]
+      },
+      {
+        "id": "REQ-25",
+        "summary": "Change the lip-biting emoji caption text to be shown exactly as: “This is me when I see you:)” (matching capitalization and punctuation), and ensure it appears together with the lip-biting image in its new location.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/LipBitingReveal.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/LipBitingReveal.tsx"
+        ]
+      },
+      {
+        "id": "REQ-26",
+        "summary": "Ensure Image 1 (the dog holding a rose in his mouth) is actually included and displayed directly ABOVE the first romantic line “I brought you a rose today…”, using a correct local static asset path under /assets/generated and preserving the global rule to omit the image entirely if it fails to load (no broken-image icon / placeholder).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/RoseReveal.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-27",
+        "summary": "Adjust the stage progression so the overall experience still progresses end-to-end exactly once per page load, without looping/blinking/restarting, and still reaches the final note + footer even if any image fails to load—while reflecting the new placement of the lip-biting section below the final note.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/components/LipBitingReveal.tsx",
+          "frontend/src/components/TimedRomanticLines.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/components/LipBitingReveal.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/App.tsx",
+    "frontend/src/components/LipBitingReveal.tsx",
+    "frontend/src/index.css",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

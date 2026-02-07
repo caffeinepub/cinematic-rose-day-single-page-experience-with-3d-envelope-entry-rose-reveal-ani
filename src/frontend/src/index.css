@@ -1,0 +1,472 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.625rem;
+        --background: 1 0 0;
+        --foreground: 0.145 0 0;
+        --card: 1 0 0;
+        --card-foreground: 0.145 0 0;
+        --popover: 1 0 0;
+        --popover-foreground: 0.145 0 0;
+        --primary: 0.205 0 0;
+        --primary-foreground: 0.985 0 0;
+        --secondary: 0.97 0 0;
+        --secondary-foreground: 0.205 0 0;
+        --muted: 0.97 0 0;
+        --muted-foreground: 0.556 0 0;
+        --accent: 0.97 0 0;
+        --accent-foreground: 0.205 0 0;
+        --destructive: 0.577 0.245 27.325;
+        --destructive-foreground: 0.985 0 0;
+        --border: 0.922 0 0;
+        --input: 0.922 0 0;
+        --ring: 0.708 0 0;
+        --chart-1: 0.646 0.222 41.116;
+        --chart-2: 0.6 0.118 184.704;
+        --chart-3: 0.398 0.07 227.392;
+        --chart-4: 0.828 0.189 84.429;
+        --chart-5: 0.769 0.188 70.08;
+        --sidebar: 0.985 0 0;
+        --sidebar-foreground: 0.145 0 0;
+        --sidebar-primary: 0.205 0 0;
+        --sidebar-primary-foreground: 0.985 0 0;
+        --sidebar-accent: 0.97 0 0;
+        --sidebar-accent-foreground: 0.205 0 0;
+        --sidebar-border: 0.922 0 0;
+        --sidebar-ring: 0.708 0 0;
+        
+        /* Romance typography colors */
+        --text-ivory: 0.95 0.02 60;
+        --text-gold: 0.85 0.08 75;
+    }
+
+    .dark {
+        --background: 0.145 0 0;
+        --foreground: 0.985 0 0;
+        --card: 0.205 0 0;
+        --card-foreground: 0.985 0 0;
+        --popover: 0.269 0 0;
+        --popover-foreground: 0.985 0 0;
+        --primary: 0.922 0 0;
+        --primary-foreground: 0.205 0 0;
+        --secondary: 0.269 0 0;
+        --secondary-foreground: 0.985 0 0;
+        --muted: 0.269 0 0;
+        --muted-foreground: 0.708 0 0;
+        --accent: 0.371 0 0;
+        --accent-foreground: 0.985 0 0;
+        --destructive: 0.704 0.191 22.216;
+        --destructive-foreground: 0.205 0 0;
+        --border: 1 0 0 / 10%;
+        --input: 1 0 0 / 15%;
+        --ring: 0.556 0 0;
+        --chart-1: 0.488 0.243 264.376;
+        --chart-2: 0.696 0.17 162.48;
+        --chart-3: 0.769 0.188 70.08;
+        --chart-4: 0.627 0.265 303.9;
+        --chart-5: 0.645 0.246 16.439;
+        --sidebar: 0.205 0 0;
+        --sidebar-foreground: 0.985 0 0;
+        --sidebar-primary: 0.488 0.243 264.376;
+        --sidebar-primary-foreground: 0.985 0 0;
+        --sidebar-accent: 0.269 0 0;
+        --sidebar-accent-foreground: 0.985 0 0;
+        --sidebar-border: 1 0 0 / 10%;
+        --sidebar-ring: 0.439 0 0;
+    }
+
+    * {
+        @apply border-border;
+    }
+    
+    body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        font-family: 'Cormorant Garamond', 'Playfair Display', 'Georgia', serif;
+    }
+}
+
+/* Cinematic background with gradient and vignette */
+.app-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(
+        135deg,
+        oklch(0.25 0.08 15) 0%,
+        oklch(0.18 0.06 10) 35%,
+        oklch(0.12 0.04 5) 70%,
+        oklch(0.08 0.02 0) 100%
+    );
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Vignette effect */
+.app-container::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 0%,
+        transparent 40%,
+        oklch(0.05 0.01 0 / 0.4) 80%,
+        oklch(0.03 0.01 0 / 0.7) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+.content-flow {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    gap: 3rem;
+}
+
+/* Envelope Entry Styles */
+.envelope-entry {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    animation: fadeIn 1s ease-out;
+}
+
+.envelope-wrapper {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.envelope-wrapper.loaded {
+    animation: floatIn 1.2s ease-out forwards;
+}
+
+.envelope-wrapper:hover {
+    transform: translateY(-8px) scale(1.02);
+}
+
+.envelope-wrapper.opening {
+    animation: envelopeOpen 1.2s ease-out forwards;
+    pointer-events: none;
+}
+
+.envelope-image {
+    max-width: min(700px, 90vw);
+    height: auto;
+    filter: drop-shadow(0 20px 40px oklch(0.05 0.01 0 / 0.6));
+    transform-origin: center top;
+}
+
+.envelope-caption {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 400;
+    font-style: italic;
+    color: oklch(var(--text-ivory));
+    text-align: center;
+    letter-spacing: 0.03em;
+    animation: fadeIn 1.5s ease-out 0.8s both;
+}
+
+/* Rose Reveal Styles (Image 1) */
+.rose-reveal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.rose-container {
+    position: relative;
+    opacity: 0;
+}
+
+.rose-container.revealing {
+    animation: imageReveal 2s ease-out forwards;
+}
+
+.rose-image {
+    max-width: min(500px, 80vw);
+    height: auto;
+    filter: drop-shadow(0 15px 35px oklch(0.05 0.01 0 / 0.5));
+}
+
+/* Petal Field Styles */
+.petal-field {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.petal {
+    position: absolute;
+    top: -50px;
+    animation: petalFall linear infinite;
+    will-change: transform, opacity;
+}
+
+/* Timed Romantic Lines Styles */
+.timed-romantic-lines {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding: 0 1rem;
+}
+
+.romantic-line {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    font-weight: 400;
+    font-style: italic;
+    color: oklch(var(--text-ivory));
+    text-align: center;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    max-width: 800px;
+}
+
+.romantic-line.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.romantic-line.final-line {
+    font-weight: 500;
+    color: oklch(var(--text-gold));
+    text-shadow: 0 0 20px oklch(0.85 0.08 75 / 0.3);
+}
+
+/* Lip Biting Reveal Styles (Image 2) - Timed mode */
+.lip-biting-reveal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+}
+
+.lip-biting-container {
+    position: relative;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.lip-biting-container.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.lip-biting-image {
+    max-width: min(400px, 75vw);
+    height: auto;
+    border-radius: 12px;
+    filter: drop-shadow(0 15px 35px oklch(0.05 0.01 0 / 0.5));
+}
+
+.lip-biting-caption {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 400;
+    font-style: italic;
+    color: oklch(var(--text-ivory));
+    text-align: center;
+    letter-spacing: 0.03em;
+    animation: fadeIn 1s ease-out;
+}
+
+/* Lip Biting Static Styles - Final stage placement */
+.lip-biting-static {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+    animation: fadeIn 1.5s ease-out 0.5s both;
+}
+
+/* Final Note Styles */
+.final-note {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 700px;
+    margin: 3rem auto 2rem;
+    padding: 0 1.5rem;
+    animation: fadeIn 1.5s ease-out;
+}
+
+.note-greeting {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 600;
+    color: oklch(var(--text-gold));
+    text-align: center;
+    letter-spacing: 0.02em;
+    margin-bottom: 1rem;
+}
+
+.note-paragraph {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+    font-weight: 400;
+    color: oklch(var(--text-ivory));
+    text-align: center;
+    line-height: 1.8;
+    letter-spacing: 0.01em;
+}
+
+.note-closing {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    font-weight: 400;
+    font-style: italic;
+    color: oklch(var(--text-gold));
+    text-align: center;
+    letter-spacing: 0.02em;
+    margin-top: 1rem;
+}
+
+/* Footer Signature Styles */
+.footer-signature {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem 3rem;
+    animation: fadeIn 2s ease-out 1s both;
+}
+
+.signature-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 400;
+    font-style: italic;
+    color: oklch(0.75 0.04 50);
+    text-align: center;
+    letter-spacing: 0.02em;
+    line-height: 1.6;
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes floatIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes envelopeOpen {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-30px) scale(1.05) rotateX(15deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-50px) scale(0.9) rotateX(25deg);
+        opacity: 0;
+    }
+}
+
+@keyframes imageReveal {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes petalFall {
+    0% {
+        transform: translateY(-50px) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(100vh) translateX(100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .content-flow {
+        gap: 2rem;
+        padding: 1.5rem 0.75rem;
+    }
+    
+    .envelope-image {
+        max-width: 95vw;
+    }
+    
+    .rose-image {
+        max-width: 85vw;
+    }
+    
+    .lip-biting-image {
+        max-width: 80vw;
+    }
+    
+    .final-note {
+        margin: 2rem auto 1.5rem;
+        padding: 0 1rem;
+    }
+    
+    .lip-biting-static {
+        margin-top: 3rem;
+        margin-bottom: 1.5rem;
+    }
+}
