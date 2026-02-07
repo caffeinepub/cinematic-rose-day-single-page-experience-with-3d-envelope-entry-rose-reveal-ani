@@ -7,7 +7,7 @@ import LipBitingReveal from './components/LipBitingReveal';
 import FinalNote from './components/FinalNote';
 import FooterSignature from './components/FooterSignature';
 
-type Stage = 'envelope' | 'image1' | 'image2' | 'final';
+type Stage = 'envelope' | 'image1' | 'final';
 
 function App() {
   const [stage, setStage] = useState<Stage>('envelope');
@@ -16,7 +16,6 @@ function App() {
   // Use refs to ensure one-time progression guards
   const stageRef = useRef<Stage>('envelope');
   const hasTransitionedToImage1 = useRef(false);
-  const hasTransitionedToImage2 = useRef(false);
   const hasTransitionedToFinal = useRef(false);
   
   stageRef.current = stage;
@@ -30,14 +29,7 @@ function App() {
   }, []);
 
   const handleImage1Complete = useCallback(() => {
-    if (stageRef.current === 'image1' && !hasTransitionedToImage2.current) {
-      hasTransitionedToImage2.current = true;
-      setStage('image2');
-    }
-  }, []);
-
-  const handleImage2Complete = useCallback(() => {
-    if (stageRef.current === 'image2' && !hasTransitionedToFinal.current) {
+    if (stageRef.current === 'image1' && !hasTransitionedToFinal.current) {
       hasTransitionedToFinal.current = true;
       setStage('final');
     }
@@ -53,23 +45,18 @@ function App() {
         {stage === 'envelope' && <EnvelopeEntry onOpen={handleEnvelopeOpen} />}
         
         {/* Image 1 (dog with rose) + romantic text - visible from image1 stage onwards */}
-        {(stage === 'image1' || stage === 'image2' || stage === 'final') && (
+        {(stage === 'image1' || stage === 'final') && (
           <>
             <RoseReveal />
             <TimedRomanticLines onComplete={handleImage1Complete} />
           </>
         )}
         
-        {/* Image 2 (lip-biting) with timed reveal - only during image2 stage */}
-        {stage === 'image2' && (
-          <LipBitingReveal onComplete={handleImage2Complete} mode="timed" />
-        )}
-        
         {/* Final note + lip-biting static + footer - visible in final stage */}
         {stage === 'final' && (
           <>
             <FinalNote />
-            <LipBitingReveal onComplete={() => {}} mode="static" />
+            <LipBitingReveal />
             <FooterSignature />
           </>
         )}

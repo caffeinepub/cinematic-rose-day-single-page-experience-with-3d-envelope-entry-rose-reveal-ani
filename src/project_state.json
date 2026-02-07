@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 13,
+  "projectStateVersion": 25,
   "summary": "Cinematic, high-contrast Rose Day single-page website experience with an interactive realistic envelope entry, then a 2-image reveal flow: Image 1 replaces the rose animation and appears with the timed romantic text sequence (no looping/blinking), then Image 2 (lip-biting emoji-style face) appears with its caption and stays visible until the final note fades in; optional SVG petal animations; final note + footer signature text shown exactly and remain permanently—no placeholders, no boxes/cards, no default UI, and no broken assets.",
   "architectural_notes": [
     "Avoid external image URLs unless base64-encoded; prefer inline SVG/base64 assets to prevent broken links.",
@@ -10,14 +10,20 @@
     "User requested a full clean rebuild of the entire experience to avoid errors/glitches/loops rather than incremental fixes.",
     "Asset mapping confirmed: Image 1 (rose replacement) = dog holding a rose in his mouth; Image 2 = lip-biting emoji-style face. Ensure correct ordering in the stage flow.",
     "User-confirmed placement update: Image 1 must appear directly above the first romantic text line (“I brought you a rose today…”).",
-    "User-confirmed placement update: Image 2 + caption must be positioned below the final note and above the footer signature, with caption exactly “This is me when I see you:)”."
+    "User-confirmed placement update: Image 2 + caption must be positioned below the final note and above the footer signature, with caption exactly “This is me when I see you:)”.",
+    "Before deploying, verify in a clean session (hard refresh/incognito) that Image 1 (dog with rose) and Image 2 (lip-biting) + caption actually render; do not claim completion until visually confirmed in the deployed build.",
+    "User-confirmed update: Image 2 caption must be exactly “This is when I see you:)” (with a colon before the closing parenthesis)."
   ],
   "known_issues": [
     "Rose section text below the image is looping/disappearing and reappearing with the note, causing instability; must be fixed so the sequence runs once and remains stable.",
     "Current deployed draft may not be loading/reflecting updated details correctly (deployment/build glitch).",
     "Deployed draft is missing required sections/assets (custom Image 1 + Image 2, final note/poetry, footer signature, and other prompt-specified elements); must be included end-to-end per the full prompt.",
     "After clicking the envelope (“For Noor — tap gently 🌹”), only the 3-line romantic text appears; Image 1 (dog with rose), Image 2 (lip-biting) + caption, final note, and footer are missing in the deployed draft.",
-    "Deployed build is still missing the user-requested Image 1 (dog with rose) and Image 2 (lip-biting) + caption; must be added and verified present in the final layout."
+    "Deployed build is still missing the user-requested Image 1 (dog with rose) and Image 2 (lip-biting) + caption; must be added and verified present in the final layout.",
+    "User reports the deployed draft still does not show Image 1 (dog holding rose) or Image 2 (lip-biting) + caption even after redeploy; must re-add and verify they appear before deploying.",
+    "Caption text for Image 2 may still be incorrect vs latest user confirmation (must be exactly “This is when I see you:)” with colon).",
+    "Image 2 asset does not reliably render (appears hidden/missing intermittently); must replace with a reliably served local/static or generated asset.",
+    "Footer signature currently breaks into multiple lines and may fall off-screen on mobile; user requests single-line footer to ensure visibility."
   ],
   "isFixRequest": true,
   "existing_features": [
@@ -228,6 +234,190 @@
         "REQ-27"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-verify-that-both-user-provided-reveal-images-are-present-in-the-repository-under-frontend-public-assets-generated-and-are-referenced-by-the-ui-using-the-exact-same-filenames-and-paths-image-1-dog-holding-rose-image-2-lip-biting-ensure-the-deployed-build-serves-these-assets-successfully-and-the-ui-displays-them-in-the-intended-locations-image-1-above-the-first-romantic-line-image-2-below-the-final-note-and-above-the-footer-rather-than-silently-missing-them-due-to-incorrect-paths-or-missing-files",
+      "title": "Verify that both user-provided reveal images are present in the repository under frontend/public/assets/generated and are referenced by the UI using the exact same filenames and paths (Image 1 = dog-holding-rose; Image 2 = lip-biting). Ensure the deployed build serves these assets successfully and the UI displays them in the intended locations (Image 1 above the first romantic line; Image 2 below the final note and above the footer) rather than silently missing them due to incorrect paths or missing files.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-prevent-new-details-not-showing-due-to-client-side-caching-by-adding-a-cache-busting-strategy-for-the-two-reveal-image-urls-image-1-and-image-2-so-that-newly-deployed-versions-reliably-fetch-the-latest-assets-without-the-user-needing-manual-cache-clears",
+      "title": "Prevent “new details not showing” due to client-side caching by adding a cache-busting strategy for the two reveal image URLs (Image 1 and Image 2) so that newly deployed versions reliably fetch the latest assets without the user needing manual cache clears.",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-build-time-safeguard-to-ensure-the-app-cannot-be-built-deployed-if-the-required-static-assets-for-the-envelope-image-image-1-or-image-2-are-missing-from-frontend-public-assets-generated-to-avoid-deployments-where-the-ui-silently-omits-them",
+      "title": "Add a build-time safeguard to ensure the app cannot be built/deployed if the required static assets for the envelope image, Image 1, or Image 2 are missing from frontend/public/assets/generated (to avoid deployments where the UI silently omits them).",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-newly-uploaded-lip-biting-emoji-image-file-f9aa8c0055136ac1bcbba2a30846c19f-4-jpg-into-the-repository-under-frontend-public-assets-generated-and-ensure-the-ui-uses-this-file-for-image-2-lip-biting",
+      "title": "Add the newly uploaded lip-biting emoji image file (f9aa8c0055136ac1bcbba2a30846c19f-4.jpg) into the repository under frontend/public/assets/generated and ensure the UI uses this file for Image 2 (lip-biting).",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-lip-biting-caption-text-to-display-exactly-this-is-when-i-see-you-matching-capitalization-and-punctuation-wherever-the-lip-biting-image-is-shown",
+      "title": "Update the lip-biting caption text to display exactly: “This is when I see you:)” (matching capitalization and punctuation) wherever the lip-biting image is shown.",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-build-time-required-assets-verification-so-it-matches-the-actual-required-filenames-used-by-the-app-for-the-envelope-image-1-and-the-newly-uploaded-image-2-the-build-must-fail-if-any-required-asset-is-missing-from-frontend-public-assets-generated",
+      "title": "Update the build-time required-assets verification so it matches the actual required filenames used by the app for the envelope, Image 1, and the newly uploaded Image 2; the build must fail if any required asset is missing from frontend/public/assets/generated.",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-deployed-build-reliably-reflects-the-latest-image-caption-changes-without-users-needing-to-manually-clear-cache-preserve-extend-the-existing-cache-busting-behavior-for-the-updated-image-2-filename",
+      "title": "Ensure the deployed build reliably reflects the latest image/caption changes without users needing to manually clear cache (preserve/extend the existing cache-busting behavior for the updated Image 2 filename).",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-newly-uploaded-image-file-f9aa8c0055136ac1bcbba2a30846c19f-5-jpg-to-the-repository-under-frontend-public-assets-generated-and-ensure-it-is-the-image-2-asset-used-by-the-app-replace-any-previous-image-2-filename-references-such-as-f9aa8c0055136ac1bcbba2a30846c19f-4-jpg",
+      "title": "Add the newly uploaded image file `f9aa8c0055136ac1bcbba2a30846c19f-5.jpg` to the repository under `frontend/public/assets/generated/` and ensure it is the Image 2 asset used by the app (replace any previous Image 2 filename references such as `f9aa8c0055136ac1bcbba2a30846c19f-4.jpg`).",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-build-time-generated-assets-verification-script-frontend-scripts-verify-generated-assets-mjs-so-the-required-assets-list-matches-the-actual-filenames-used-by-the-app-including-requiring-f9aa8c0055136ac1bcbba2a30846c19f-5-jpg-for-image-2",
+      "title": "Update the build-time generated-assets verification script (`frontend/scripts/verify-generated-assets.mjs`) so the required assets list matches the actual filenames used by the app, including requiring `f9aa8c0055136ac1bcbba2a30846c19f-5.jpg` for Image 2.",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-lip-biting-image-2-section-renders-only-in-the-final-layout-position-below-the-long-rose-day-final-note-and-above-the-footer-signature-no-duplicate-lip-biting-section-earlier-in-the-stage-flow",
+      "title": "Ensure the lip-biting Image 2 section renders ONLY in the final layout position: below the long Rose Day final note and above the footer signature (no duplicate lip-biting section earlier in the stage flow).",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-set-the-lip-biting-caption-text-to-display-exactly-including-capitalization-and-punctuation-this-is-when-i-see-you-and-ensure-the-caption-is-rendered-even-if-the-image-2-asset-fails-to-load-omit-only-the-broken-image-do-not-omit-the-caption",
+      "title": "Set the lip-biting caption text to display exactly (including capitalization and punctuation): `This is when I see you:)` and ensure the caption is rendered even if the Image 2 asset fails to load (omit only the broken image; do not omit the caption).",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-generate-a-new-local-static-image-2-asset-cartoon-emoji-vibe-funny-romantic-lip-biting-expression-and-add-it-to-frontend-public-assets-generated-so-it-can-be-served-reliably-with-no-external-hotlinks",
+      "title": "Generate a new local static Image 2 asset (cartoon/emoji-vibe, funny romantic, lip-biting expression) and add it to `frontend/public/assets/generated/` so it can be served reliably with no external hotlinks.",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-current-image-2-filename-reference-in-frontend-src-components-lipbitingreveal-tsx-so-the-ui-uses-the-newly-generated-image-2-asset-and-keep-the-existing-caption-text-unchanged-do-not-re-add-or-modify-the-caption-copy-ensure-the-image-is-rendered-above-the-caption-in-the-existing-final-layout-location-below-the-final-note-and-above-the-footer",
+      "title": "Replace the current Image 2 filename reference in `frontend/src/components/LipBitingReveal.tsx` so the UI uses the newly generated Image 2 asset, and keep the existing caption text unchanged (do not re-add or modify the caption copy). Ensure the image is rendered above the caption, in the existing final layout location (below the final note and above the footer).",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-build-time-generated-assets-verification-script-frontend-scripts-verify-generated-assets-mjs-so-that-it-requires-the-newly-generated-image-2-filename-and-no-longer-requires-f9aa8c0055136ac1bcbba2a30846c19f-5-jpg",
+      "title": "Update the build-time generated-assets verification script `frontend/scripts/verify-generated-assets.mjs` so that it requires the newly generated Image 2 filename (and no longer requires `f9aa8c0055136ac1bcbba2a30846c19f-5.jpg`).",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-harden-image-2-rendering-so-it-cannot-appear-hidden-due-to-loading-state-styling-ensure-the-image-2-img-is-not-permanently-suppressed-by-display-none-in-a-way-that-can-leave-the-section-visually-empty-despite-a-successful-network-load",
+      "title": "Harden Image 2 rendering so it cannot appear “hidden” due to loading-state styling: ensure the Image 2 `<img>` is not permanently suppressed by `display: none` in a way that can leave the section visually empty despite a successful network load.",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-generate-a-new-local-static-red-rose-bouquet-image-in-the-same-simple-sketch-style-as-the-envelope-with-a-fully-transparent-background-and-no-frame-box-and-add-it-under-frontend-public-assets-generated",
+      "title": "Generate a new local static red rose bouquet image in the same simple sketch style as the envelope, with a fully transparent background and no frame/box, and add it under `frontend/public/assets/generated/`.",
+      "reqIds": [
+        "REQ-45"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-the-new-bouquet-image-directly-above-the-first-romantic-line-i-brought-you-a-rose-today-in-the-image-1-section-while-keeping-the-existing-image-1-dog-holding-rose-placement-rule-intact-and-preserving-the-global-rule-to-omit-only-the-bouquet-image-if-it-fails-to-load-no-broken-image-icon-or-placeholder",
+      "title": "Display the new bouquet image directly ABOVE the first romantic line “I brought you a rose today…” in the Image 1 section, while keeping the existing Image 1 (dog-holding-rose) placement rule intact and preserving the global rule to omit only the bouquet image if it fails to load (no broken-image icon or placeholder).",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-final-stage-lip-biting-section-below-the-long-final-note-and-above-the-footer-add-a-separate-decorative-line-containing-exactly-the-emoji-rendered-above-the-existing-caption-without-duplicating-or-rewriting-the-caption-text-this-is-when-i-see-you",
+      "title": "In the final-stage lip-biting section (below the long final note and above the footer), add a separate decorative line containing exactly the emoji “😍” rendered ABOVE the existing caption, without duplicating or rewriting the caption text (“This is when I see you:)”).",
+      "reqIds": [
+        "REQ-47"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-footer-signature-to-render-as-one-single-line-with-the-exact-text-crafted-with-love-from-hamza-for-the-one-who-owns-my-heart-while-keeping-the-existing-romantic-font-styling-and-ensuring-it-remains-visible-on-mobile-no-forced-line-breaks",
+      "title": "Update the footer signature to render as ONE single line with the exact text: \"Crafted with love, from Hamza — for the one who owns my heart\" while keeping the existing romantic font styling and ensuring it remains visible on mobile (no forced line breaks).",
+      "reqIds": [
+        "REQ-48"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-scripts-verify-generated-assets-mjs-so-the-build-fails-unless-all-required-generated-assets-exist-including-the-new-bouquet-asset-and-the-currently-referenced-envelope-image-1-and-image-2-filenames",
+      "title": "Update `frontend/scripts/verify-generated-assets.mjs` so the build fails unless all required generated assets exist, including the new bouquet asset and the currently referenced envelope, Image 1, and Image 2 filenames.",
+      "reqIds": [
+        "REQ-49"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-bouquet-element-currently-rendered-above-the-first-romantic-line-in-timedromanticlines-the-bouquet-image-loaded-from-assets-generated-rose-bouquet-sketch-dim-1400x900-png-so-that-nothing-related-to-the-bouquet-is-displayed-there",
+      "title": "Remove the bouquet element currently rendered above the first romantic line in `TimedRomanticLines` (the bouquet image loaded from `/assets/generated/rose-bouquet-sketch.dim_1400x900.png`) so that nothing related to the bouquet is displayed there.",
+      "reqIds": [
+        "REQ-50"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-single-text-emoji-line-containing-exactly-directly-above-the-first-romantic-line-i-brought-you-a-rose-today-in-the-timedromanticlines-section-styled-like-the-existing-bottom-emoji-line-the-line-used-in-the-final-stage-lip-biting-section-and-make-the-emoji-a-bit-larger-using-font-size-only-do-not-convert-to-an-image",
+      "title": "Add a single text emoji line containing exactly \"🌹\" directly above the first romantic line “I brought you a rose today…” in the `TimedRomanticLines` section, styled like the existing bottom emoji line (the 😍 line used in the final-stage lip-biting section), and make the 🌹 emoji a bit larger using font-size only (do not convert to an image).",
+      "reqIds": [
+        "REQ-51"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-build-time-generated-assets-verification-script-frontend-scripts-verify-generated-assets-mjs-so-it-no-longer-requires-the-removed-bouquet-asset-rose-bouquet-sketch-dim-1400x900-png-to-be-present-for-a-successful-build-deploy-while-keeping-verification-for-the-envelope-image-1-and-image-2-assets-intact",
+      "title": "Update the build-time generated-assets verification script (`frontend/scripts/verify-generated-assets.mjs`) so it no longer requires the removed bouquet asset (`rose-bouquet-sketch.dim_1400x900.png`) to be present for a successful build/deploy, while keeping verification for the envelope, Image 1, and Image 2 assets intact.",
+      "reqIds": [
+        "REQ-52"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -302,6 +492,52 @@
     {
       "id": "AR-15",
       "summary": "Place Image 2 (lip-biting emoji-style face) BELOW the long Rose Day final note/letter and ABOVE the footer signature; add caption exactly: “This is me when I see you:)” with some gap; keep all other elements untouched",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Ensure the lip-biting image + caption render only in the user-requested location: below the long Rose Day final note/letter and above the footer signature text, with a visible vertical gap from the note, and do not show a duplicate lip-biting section earlier in the stage flow.",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Verify Image 1 (dog holding a rose) is present in frontend/public/assets/generated and is actually displayed directly above the first romantic line “I brought you a rose today…”; if the image fails to load, omit it entirely without showing any broken-image icon or placeholder.",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Update Image 2 caption text to display exactly: “This is when I see you:)” (including the colon before the closing parenthesis) and render it together with Image 2 below the Rose Day note and above the “Crafted by Hamza” footer; show the caption even if the Image 2 asset fails to load (omit only the broken image, not the caption).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Replace Image 2 with a newly generated or sourced cartoon/emoji-vibe lip-biting face image (no external hotlinks; must reliably render every time) and place the image ABOVE the existing caption text (do not re-add/change the caption text).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Add a 😍 emoji as a separate decorative line ABOVE the existing Image 2 caption (do not duplicate/re-add the caption). Placement remains below the long final note and above the footer, on all screen sizes.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-23",
+      "summary": "Change the footer signature layout to render the exact text on ONE single line: \"Crafted with love, from Hamza — for the one who owns my heart\" (same font styling), on all screen sizes.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Remove the bouquet element above the first romantic line and instead add a single 🌹 text emoji above “I brought you a rose today…”, styled like the bottom emoji line, and make it a bit larger via font-size only (no conversion to an image); do not change anything else.",
       "reqIds": [],
       "status": "pending"
     }

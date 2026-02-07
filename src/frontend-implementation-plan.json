@@ -1,94 +1,63 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Reorder final layout sections and ensure dog-with-rose image appears above romantic lines",
+  "title": "Replace bouquet image with a large 🌹 emoji line above the first timed romantic line",
   "requirements": [
     {
-      "id": "REQ-24",
-      "summary": "Move the lip-biting image section to render below FinalNote and above FooterSignature with a visible vertical gap, keeping all other visuals/copy unchanged.",
+      "id": "REQ-50",
+      "summary": "Remove the bouquet image element from TimedRomanticLines so nothing bouquet-related is displayed above the romantic lines.",
       "acceptanceCriteria": [
-        "After the envelope is opened and the experience completes, the page order is: FinalNote text block → (gap) Lip-biting image + caption → FooterSignature text.",
-        "Lip-biting section is not shown above or inside the FinalNote content.",
-        "No cards/frames/containers are introduced around the lip-biting image; it sits directly on the cinematic background.",
-        "All previously existing sections (envelope, Image 1 area, romantic lines, petals if enabled, final note, footer) keep their current styling and behavior except for the lip-biting section’s placement."
+        "No bouquet image is rendered above the romantic lines at any time.",
+        "The `TimedRomanticLines` component no longer references `/assets/generated/rose-bouquet-sketch.dim_1400x900.png`.",
+        "The timed 3-line sequence behavior remains unchanged (timing, once-per-page-load behavior, no looping/blinking)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/App.tsx",
+          "path": "frontend/src/components/TimedRomanticLines.tsx",
           "operation": "modify",
-          "description": "Reorder the final-stage render tree so the lip-biting section is rendered between FinalNote and FooterSignature, while ensuring the lip-biting reveal/progression logic still occurs during the pre-final stage (without rendering it above the FinalNote)."
-        },
-        {
-          "path": "frontend/src/components/LipBitingReveal.tsx",
-          "operation": "modify",
-          "description": "Add a non-timed/static rendering mode (or equivalent) so the lip-biting image+caption can be shown in the final layout location without triggering/restarting timed progression, and without introducing any new card/frame/container UI."
+          "description": "Remove the bouquet image loading/rendering logic (including the `/assets/generated/rose-bouquet-sketch.dim_1400x900.png` reference) while keeping the existing one-time timed progression and onComplete behavior unchanged."
         },
         {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Add/adjust styling to create a clear vertical gap between the FinalNote block and the lip-biting section in its new final-stage placement, without changing other section styling."
+          "description": "Remove or neutralize the now-unused bouquet-specific styling block (e.g., `.bouquet-sketch`) to avoid keeping bouquet-related presentation artifacts, without altering other layout/stage styling."
         }
       ]
     },
     {
-      "id": "REQ-25",
-      "summary": "Update the lip-biting emoji caption text exactly and ensure it appears with the lip-biting image in its new location.",
+      "id": "REQ-51",
+      "summary": "Add a single text \"🌹\" emoji line above the first romantic line in TimedRomanticLines, styled like the existing bottom emoji line but slightly larger via font-size only.",
       "acceptanceCriteria": [
-        "The caption renders exactly as: “This is me when I see you:)”.",
-        "The previous caption text (“This is when I see you…”) is not displayed anywhere."
+        "A single \"🌹\" text emoji is visible directly above the first romantic line in the Image 1 + timed-lines section.",
+        "The 🌹 emoji is larger than the bottom 😍 emoji line via font-size styling only (no image asset).",
+        "Only one 🌹 emoji line is rendered (no duplicates).",
+        "No other copy, layout ordering, or stage flow changes are introduced beyond replacing the bouquet element with the 🌹 emoji line."
       ],
       "file_operations": [
-        {
-          "path": "frontend/src/components/LipBitingReveal.tsx",
-          "operation": "modify",
-          "description": "Change the caption string to render exactly “This is me when I see you:)” (matching capitalization/punctuation) and ensure it is rendered alongside the lip-biting image in the final placement behavior."
-        }
-      ]
-    },
-    {
-      "id": "REQ-26",
-      "summary": "Ensure Image 1 (dog holding a rose) is displayed directly above the first romantic line using a local /assets/generated path, and is omitted entirely if it fails to load.",
-      "acceptanceCriteria": [
-        "When the envelope transitions to the romantic lines section, the dog-with-rose image is visible above the first romantic line on a normal load.",
-        "The Image 1 asset is loaded from a local path under /assets/generated (no external URLs).",
-        "If the Image 1 asset fails to load, the app shows no broken-image icon and continues the flow with the text still visible."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/RoseReveal.tsx",
-          "operation": "modify",
-          "description": "Verify the Image 1 <img> src uses the correct local static asset path under /assets/generated and that the component continues to fully omit rendering on load failure (no broken-image icon), while keeping it positioned above the romantic lines."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Confirm RoseReveal is rendered immediately before the first romantic line sequence (TimedRomanticLines) in the romantic-lines stage so Image 1 appears above “I brought you a rose today…” on a normal load."
-        }
-      ]
-    },
-    {
-      "id": "REQ-27",
-      "summary": "Maintain one-time, end-to-end stage progression per page load without looping, and ensure final note + footer always render even if images fail, while reflecting the new lip-biting placement.",
-      "acceptanceCriteria": [
-        "The experience progresses once per page load with no repeated/looped timed sequences caused by re-renders.",
-        "FinalNote and FooterSignature always render after the envelope is opened, even if Image 1 and/or the lip-biting image fails to load.",
-        "The lip-biting section appears in the final layout position (below FinalNote, above FooterSignature) without causing stage-flow regressions or re-triggers."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Adjust the stage/render wiring so the timed reveal completion callbacks still advance stages exactly once, while the final-stage UI order becomes FinalNote → (gap) Lip-biting section → FooterSignature, and image failures do not prevent reaching the final stage."
-        },
-        {
-          "path": "frontend/src/components/LipBitingReveal.tsx",
-          "operation": "modify",
-          "description": "Ensure the lip-biting reveal logic cannot retrigger/blink due to remounts/re-renders, and that image load failure still triggers completion so the app always reaches final note + footer; keep safe omission behavior on image error."
-        },
         {
           "path": "frontend/src/components/TimedRomanticLines.tsx",
           "operation": "modify",
-          "description": "Confirm the one-time timers/completion guard remains stable under the updated App render order so the romantic lines sequence does not loop or restart."
+          "description": "Insert a single text emoji line containing exactly \"🌹\" directly above the first romantic line, ensuring it renders only once and does not impact the existing timed sequence flow or any existing user-facing text."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add a new CSS class for the 🌹 line that matches the look/spacing/animation of `.lip-biting-emoji-line` but uses a larger font-size (font-size only) so the 🌹 is visibly bigger than the 😍 line."
+        }
+      ]
+    },
+    {
+      "id": "REQ-52",
+      "summary": "Update the generated-assets verification script to stop requiring the removed bouquet asset while keeping other asset checks intact.",
+      "acceptanceCriteria": [
+        "`frontend/scripts/verify-generated-assets.mjs` does not list `rose-bouquet-sketch.dim_1400x900.png` as a required asset.",
+        "Build fails if any still-required assets are missing (envelope, dog-holding-rose, lip-biting image), and succeeds without the bouquet asset present."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/scripts/verify-generated-assets.mjs",
+          "operation": "modify",
+          "description": "Remove `rose-bouquet-sketch.dim_1400x900.png` from the REQUIRED_ASSETS list while keeping verification for `envelope-textured.dim_1400x900.png`, `dog-holding-rose.jpg`, and `lip-biting-emoji-cartoon.dim_900x1100.png` unchanged."
         }
       ]
     }

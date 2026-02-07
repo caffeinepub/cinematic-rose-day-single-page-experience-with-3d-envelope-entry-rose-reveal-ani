@@ -1,12 +1,14 @@
 import { useRef } from 'react';
-import { useSafeImage } from '../hooks/useSafeImage';
+import { useCacheBustedImageSrc } from '../hooks/useCacheBustedImageSrc';
 
 interface EnvelopeEntryProps {
   onOpen: () => void;
 }
 
 export default function EnvelopeEntry({ onOpen }: EnvelopeEntryProps) {
-  const { loaded, error, handleLoad, handleError } = useSafeImage();
+  const { src, loaded, error, handleLoad, handleError } = useCacheBustedImageSrc({
+    src: '/assets/generated/envelope-textured.dim_1400x900.png',
+  });
   const hasOpenedRef = useRef(false);
 
   const handleClick = () => {
@@ -44,7 +46,7 @@ export default function EnvelopeEntry({ onOpen }: EnvelopeEntryProps) {
         }}
       >
         <img
-          src="/assets/generated/envelope-textured.dim_1400x900.png"
+          src={src}
           alt="Elegant envelope"
           className="envelope-image"
           onLoad={handleLoad}

@@ -1,7 +1,9 @@
-import { useSafeImage } from '../hooks/useSafeImage';
+import { useCacheBustedImageSrc } from '../hooks/useCacheBustedImageSrc';
 
 export default function RoseReveal() {
-  const { loaded, error, handleLoad, handleError } = useSafeImage();
+  const { src, loaded, error, handleLoad, handleError } = useCacheBustedImageSrc({
+    src: '/assets/generated/dog-holding-rose.jpg',
+  });
 
   // Don't render if image failed to load
   if (error) {
@@ -12,7 +14,7 @@ export default function RoseReveal() {
     <div className="rose-reveal">
       <div className={`rose-container ${loaded ? 'revealing' : ''}`}>
         <img
-          src="/assets/generated/f9aa8c0055136ac1bcbba2a30846c19f.jpg"
+          src={src}
           alt="Beautiful rose"
           className="rose-image"
           onLoad={handleLoad}

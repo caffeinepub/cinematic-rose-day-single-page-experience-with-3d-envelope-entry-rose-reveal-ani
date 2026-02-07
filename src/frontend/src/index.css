@@ -239,6 +239,13 @@
     padding: 0 1rem;
 }
 
+.rose-emoji-line {
+    font-size: clamp(3.5rem, 8vw, 5.5rem);
+    text-align: center;
+    margin: 0 0 0.5rem 0;
+    animation: fadeIn 1.2s ease-out;
+}
+
 .romantic-line {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(1.5rem, 4vw, 2.25rem);
@@ -293,6 +300,13 @@
     filter: drop-shadow(0 15px 35px oklch(0.05 0.01 0 / 0.5));
 }
 
+.lip-biting-emoji-line {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    text-align: center;
+    margin: 0;
+    animation: fadeIn 1s ease-out;
+}
+
 .lip-biting-caption {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(1.25rem, 3vw, 1.75rem);
@@ -309,7 +323,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
     margin-top: 4rem;
     margin-bottom: 2rem;
     animation: fadeIn 1.5s ease-out 0.5s both;
@@ -374,7 +388,8 @@
     color: oklch(0.75 0.04 50);
     text-align: center;
     letter-spacing: 0.02em;
-    line-height: 1.6;
+    white-space: nowrap;
+    overflow: visible;
 }
 
 /* Keyframe Animations */
@@ -468,5 +483,10 @@
     .lip-biting-static {
         margin-top: 3rem;
         margin-bottom: 1.5rem;
+    }
+    
+    .signature-text {
+        white-space: normal;
+        max-width: 90vw;
     }
 }

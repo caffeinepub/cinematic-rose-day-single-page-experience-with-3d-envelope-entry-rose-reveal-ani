@@ -50,6 +50,8 @@ export default function TimedRomanticLines({ onComplete }: TimedRomanticLinesPro
 
   return (
     <div className="timed-romantic-lines">
+      {/* Rose emoji above first line */}
+      <p className="rose-emoji-line">🌹</p>
       {lines.map((line, index) => (
         <p
           key={index}
